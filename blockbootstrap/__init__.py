@@ -30,7 +30,7 @@ class BBS:
         self.end = self.ts.index[-1]
         self.ts_range = pd.date_range(self.start, self.end, freq=freq)
         #self.N = self.ts.count()
-        self.N = self.ts.shape
+        self.N = self.ts.shape[0]
         self.N_ts = self.ts_range.shape[0]
 
     def sample(self, seed=None):
