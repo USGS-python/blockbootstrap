@@ -9,7 +9,7 @@ class BBS:
         """
         Parameters
         ----------
-        timeseries : pandas.Series
+        timeseries : pandas.Series or DataFrame
             Time-indexed data series to be bootstrapped
 
         block_length : int
@@ -17,7 +17,7 @@ class BBS:
         freq : {'D','H','M','S'}
             Frequency. For example D for days
         """
-        assert isinstance(timeseries, pd.Series), ValueError('timeseries must be a pandas Series.')
+        #assert isinstance(timeseries, pd.Series), ValueError('timeseries must be a pandas Series.')
         self.ts = timeseries.copy()
 
         assert isinstance(block_length, int), ValueError('block_length must be int')
@@ -25,11 +25,12 @@ class BBS:
 
         # prep timeseries
         offset = pd.Timedelta(f'1 {freq}')
-        self.ts = self.ts.dropna().sort_index()
+        self.ts = self.ts.sort_index()
         self.start = self.ts.index[0] - self.block_length + offset
         self.end = self.ts.index[-1]
         self.ts_range = pd.date_range(self.start, self.end, freq=freq)
-        self.N = self.ts.count()
+        #self.N = self.ts.count()
+        self.N = self.ts.shape
         self.N_ts = self.ts_range.shape[0]
 
     def sample(self, seed=None):
