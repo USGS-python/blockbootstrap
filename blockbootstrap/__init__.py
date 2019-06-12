@@ -42,7 +42,8 @@ class BBS:
         A time-indexed data series sampled from the original by block bootstrap.
         """
         N_r = 0
-        values = np.empty(self.N)
+        #values = np.empty(self.N)
+        values = np.empty_like(self.ts)
         times = np.empty(self.N, dtype='<M8[ns]')
 
         while N_r < self.N:
@@ -65,5 +66,5 @@ class BBS:
             times[N_r:N_r + N_b] = block.index[0:N_b]
             N_r += N_b
 
-        bootstrap = pd.Series(data=values, index=times)
+        bootstrap = pd.DataFrame(data=values, index=times, columns=self.ts.columns)
         return bootstrap.sort_index()
